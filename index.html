@@ -1,1 +1,1140 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080808">
+  <title>KME NEXUS | Dream. Discover. Grow.</title>
+  <style>
+    :root {
+      --gold: #d4af37;
+      --black: #080808;
+      --panel: #141414;
+      --muted: #aaa;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 7%;
+      border-bottom: 1px solid #493a16;
+      position: sticky;
+      top: 0;
+      background: #080808ee;
+      z-index: 10;
+    }
+
+    .logo {
+      color: var(--gold);
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .logo span { color: white; }
+
+    nav { display: flex; gap: 22px; flex-wrap: wrap; }
+    nav a { font-size: 13px; transition: .3s; }
+    nav a:hover { color: var(--gold); }
+
+    .hero {
+      min-height: 560px;
+      padding: 110px 8%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse at 80% 50%, #6c4b132e, transparent 55%),
+        linear-gradient(120deg, #080808, #171109);
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      letter-spacing: 5px;
+      font-size: 12px;
+    }
+
+    h1 {
+      font-size: clamp(45px, 8vw, 90px);
+      margin: 18px 0;
+    }
+
+    h1 span { color: var(--gold); }
+
+    .hero p {
+      color: #ccc;
+      line-height: 1.8;
+      max-width: 560px;
+    }
+
+    .actions { display: flex; gap: 15px; margin-top: 30px; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 24px;
+      border: 1px solid var(--gold);
+      border-radius: 30px;
+      color: var(--gold);
+      font-weight: bold;
+      transition: .3s;
+    }
+
+    .btn.primary { background: var(--gold); color: black; }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 0 20px #d4af3740; }
+
+    section { padding: 75px 7%; }
+
+    .section-heading {
+      color: var(--gold);
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+
+    .section-desc { color: var(--muted); margin-bottom: 30px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: linear-gradient(145deg, #191919, #0e0e0e);
+      border: 1px solid #403319;
+      padding: 28px;
+      border-radius: 16px;
+      transition: .3s;
+    }
+
+    .card:hover { transform: translateY(-6px); border-color: var(--gold); }
+
+    .card .symbol { font-size: 32px; margin-bottom: 18px; }
+    .card h3 { color: var(--gold); margin-bottom: 12px; }
+    .card p { color: #aaa; line-height: 1.7; font-size: 14px; }
+
+    .card a { display: inline-block; margin-top: 20px; color: var(--gold); }
+
+    .notice {
+      border-left: 3px solid var(--gold);
+      padding: 15px;
+      background: #17130a;
+      color: #bbb;
+      font-size: 13px;
+      line-height: 1.7;
+      margin-top: 25px;
+    }
+
+    footer {
+      padding: 30px 7%;
+      border-top: 1px solid #493a16;
+      color: #999;
+      text-align: center;
+      line-height: 2;
+    }
+
+    @media(max-width:700px) {
+      header { flex-direction: column; gap: 18px; }
+      nav { justify-content: center; gap: 15px; }
+      .hero { min-height: 480px; padding: 75px 7%; }
+    }
+
+/* NEXUS WELCOME EXPERIENCE */
+#welcome-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background:
+    radial-gradient(circle at center, #30230d 0%, #080808 65%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 25px;
+  overflow: hidden;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+#welcome-screen.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.welcome-content {
+  position: relative;
+  z-index: 2;
+  animation: welcomeAppear 1.5s ease;
+}
+
+.welcome-logo {
+  font-size: clamp(35px, 7vw, 65px);
+  color: #D4AF37;
+  letter-spacing: 8px;
+  text-shadow: 0 0 30px #D4AF3780;
+}
+
+.welcome-title {
+  color: white;
+  font-size: clamp(22px, 4vw, 38px);
+  margin: 30px 0 15px;
+  letter-spacing: 3px;
+}
+
+.greeting {
+  color: #D4AF37;
+  font-size: 25px;
+  min-height: 40px;
+  animation: greetingGlow 2s infinite alternate;
+}
+
+.welcome-tagline {
+  color: #aaa;
+  letter-spacing: 5px;
+  font-size: 11px;
+  margin: 25px 0 35px;
+}
+
+.enter-nexus {
+  padding: 15px 35px;
+  background: #D4AF37;
+  color: #080808;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.enter-nexus:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 30px #D4AF3780;
+}
+
+@keyframes welcomeAppear {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes greetingGlow {
+  from { opacity: .55; }
+  to { opacity: 1; text-shadow: 0 0 20px #D4AF37; }
+}
+
+.gold-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #D4AF37;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #D4AF37;
+  animation: particleFloat 6s infinite ease-in-out alternate;
+}
+
+@keyframes particleFloat {
+  from { transform: translateY(30px); opacity: .2; }
+  to { transform: translateY(-80px); opacity: 1; }
+}
+
+  </style>
+<style>
+
+/* KME NEXUS WELCOME SCREEN */
+#welcome-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+  overflow: hidden;
+  background: radial-gradient(circle, #30230d, #080808 70%);
+  transition: opacity .9s ease, visibility .9s ease;
+}
+#welcome-screen.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.welcome-content {
+  position: relative;
+  z-index: 2;
+  animation: nexusEnter 1.2s ease;
+}
+.welcome-logo {
+  color: #D4AF37;
+  font-size: clamp(38px, 8vw, 70px);
+  font-weight: 900;
+  letter-spacing: 7px;
+  text-shadow: 0 0 25px #D4AF3780;
+}
+.welcome-title {
+  color: white;
+  font-size: clamp(20px, 4vw, 36px);
+  margin: 28px 0 18px;
+}
+.greeting {
+  color: #D4AF37;
+  font-size: 26px;
+  min-height: 38px;
+  animation: nexusGlow 1.5s infinite alternate;
+}
+.welcome-tagline {
+  color: #aaa;
+  letter-spacing: 4px;
+  font-size: 11px;
+  margin: 25px 0 32px;
+}
+.enter-nexus {
+  background: #D4AF37;
+  color: #080808;
+  border: 0;
+  border-radius: 30px;
+  padding: 15px 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .3s;
+}
+.enter-nexus:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 25px #D4AF3780;
+}
+.nexus-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #D4AF37;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #D4AF37;
+  animation: nexusFloat 5s infinite alternate ease-in-out;
+}
+@keyframes nexusEnter {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes nexusGlow {
+  from { opacity: .6; }
+  to { opacity: 1; text-shadow: 0 0 20px #D4AF37; }
+}
+@keyframes nexusFloat {
+  from { transform: translateY(20px); opacity: .2; }
+  to { transform: translateY(-65px); opacity: 1; }
+}
+
+</style>
+<style>
+
+/* KME NEXUS PREMIUM GOLDEN EFFECTS */
+section {
+  position: relative;
+}
+
+.section-heading {
+  display: inline-block;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.section-heading::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 55%;
+  height: 2px;
+  background: linear-gradient(90deg, #D4AF37, transparent);
+  transition: width .5s ease;
+}
+
+.section-heading:hover::after {
+  width: 100%;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  transition: transform .35s ease, border-color .35s ease,
+              box-shadow .35s ease;
+}
+
+.card:hover {
+  transform: translateY(-7px);
+  border-color: #D4AF37;
+  box-shadow: 0 12px 35px #D4AF3718;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 70%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+  transition: left .7s ease;
+}
+
+.card:hover::before {
+  left: 120%;
+}
+
+.btn, .enter-nexus {
+  transition: all .3s ease;
+}
+
+.btn:hover, .enter-nexus:hover {
+  box-shadow: 0 0 22px #D4AF3755;
+}
+
+.reveal-section {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+
+.reveal-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-section {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+</style>
+
+<style id="nexus-command-center-css">
+.nexus-sidebar {
+  position:fixed; inset:0 auto 0 0; width:245px; padding:28px 18px;
+  background:#0d0d0d; border-right:1px solid #493a16; z-index:100;
+  display:flex; flex-direction:column;
+}
+.nexus-side-brand { color:#d4af37; font-size:21px; font-weight:900;
+  letter-spacing:2px; padding:0 12px 38px; }
+.nexus-side-brand span { color:#fff; }
+.nexus-side-label { color:#777; font-size:10px; letter-spacing:3px;
+  padding:0 12px 14px; }
+.nexus-side-nav { display:flex; flex-direction:column; gap:7px; }
+.nexus-side-nav a { display:flex; align-items:center; gap:13px;
+  padding:12px; border-radius:9px; color:#aaa; font-size:14px;
+  transition:.25s; }
+.nexus-side-nav a:hover, .nexus-side-nav a.active {
+  color:#d4af37; background:#d4af3712; }
+.nexus-side-nav svg { width:18px; height:18px; fill:none;
+  stroke:currentColor; stroke-width:1.7; stroke-linecap:round;
+  stroke-linejoin:round; flex-shrink:0; }
+.nexus-side-bottom { margin-top:auto; padding:16px 12px;
+  border-top:1px solid #302817; color:#aaa; font-size:10px;
+  letter-spacing:1px; }
+.nexus-side-bottom small { display:block; color:#777;
+  margin-top:9px; font-size:9px; }
+.nexus-status-dot { display:inline-block; width:7px; height:7px;
+  border-radius:50%; background:#d4af37; margin-right:7px; }
+header, main, footer { margin-left:245px; }
+header nav { display:none; }
+@media(max-width:800px) {
+  .nexus-sidebar { position:sticky; top:0; width:100%; height:auto;
+    padding:12px; border-right:0; border-bottom:1px solid #493a16; }
+  .nexus-side-brand { padding:0 8px 12px; }
+  .nexus-side-label, .nexus-side-bottom { display:none; }
+  .nexus-side-nav { flex-direction:row; overflow-x:auto; gap:5px; }
+  .nexus-side-nav a { white-space:nowrap; padding:10px; font-size:12px; }
+  .nexus-side-nav svg { width:15px; height:15px; }
+  header, main, footer { margin-left:0; }
+}
+</style>
+
+
+<style id="nexus-dashboard-css">
+.nexus-dashboard { margin:0 0 25px; padding:35px 7%;
+  background:linear-gradient(135deg,#17130b,#101010);
+  border-bottom:1px solid #493a16; }
+.nexus-dashboard-top { display:flex; justify-content:space-between;
+  align-items:center; gap:20px; flex-wrap:wrap; margin-bottom:25px; }
+.nexus-dashboard h2 { color:#d4af37; font-size:25px; }
+.nexus-dashboard p { color:#999; font-size:13px; margin-top:7px; }
+.nexus-clock { color:#d4af37; font-size:25px; font-weight:bold;
+  font-variant-numeric:tabular-nums; }
+.nexus-date { color:#999; font-size:12px; text-align:right; margin-top:5px; }
+.nexus-search { width:100%; padding:15px 18px; border-radius:10px;
+  border:1px solid #493a16; background:#080808; color:white;
+  outline:none; font-size:14px; margin-bottom:22px; }
+.nexus-search:focus { border-color:#d4af37; }
+.nexus-quick-grid { display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(155px,1fr)); gap:13px; }
+.nexus-quick-card { display:block; padding:18px; border:1px solid #403319;
+  border-radius:12px; background:#141414; transition:.25s; }
+.nexus-quick-card:hover { transform:translateY(-4px);
+  border-color:#d4af37; background:#1b180f; }
+.nexus-quick-card strong { display:block; color:#d4af37;
+  font-size:14px; margin-bottom:7px; }
+.nexus-quick-card span { color:#999; font-size:12px; }
+.nexus-no-results { display:none; color:#aaa; padding:15px 0; }
+@media(max-width:600px) {
+  .nexus-dashboard { padding:28px 6%; }
+  .nexus-clock { font-size:21px; }
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="welcome-screen">
+  <div class="welcome-content">
+    <div class="welcome-logo">KME NEXUS</div>
+    <h1 class="welcome-title">WELCOME TO OUR NEXUS WORLD</h1>
+    <div class="greeting" id="greeting">Hello</div>
+    <div class="welcome-tagline">DREAM • DISCOVER • GROW</div>
+    <button class="enter-nexus" onclick="enterNexus()">
+      GO TO HOME PAGE →
+    </button>
+  </div>
+</div>
+
+
+
+<!-- NEXUS_COMMAND_CENTER_V1 -->
+<aside class="nexus-sidebar" aria-label="NEXUS navigation">
+  <a class="nexus-side-brand" href="#home">KME <span>NEXUS</span></a>
+  <p class="nexus-side-label">WORKSPACE</p>
+  <nav class="nexus-side-nav">
+    <a href="#command-center"><span>⌂</span>Command Center</a>
+    <a href="#kme-focus-tracker"><span>✓</span>Focus Tracker</a>
+    <a class="active" href="#home"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>Home</a>
+    <a href="#store"><svg viewBox="0 0 24 24"><path d="M3 8h18l-2 13H5L3 8Zm4 0 2-5h6l2 5"/></svg>Store</a>
+    <a href="#portfolio"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 15 5-5 4 4 3-3 6 6"/></svg>Portfolio</a>
+    <a href="#ai"><svg viewBox="0 0 24 24"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1"/><circle cx="12" cy="12" r="4"/></svg>AI Tools</a>
+    <a href="#blog"><svg viewBox="0 0 24 24"><path d="M5 3h14v18H5zM8 7h8M8 11h8M8 15h5"/></svg>Journal</a>
+    <a href="#referral"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 20c0-4 2-6 6-6s6 2 6 6m1-5c3 0 5 2 5 5"/></svg>Referral</a>
+    <a href="#business"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V4h8v3M3 12h18m-11 0v2h4v-2"/></svg>BizPilot</a>
+    <a href="#free-space"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM8 8h8M8 12h8M8 16h5"/></svg>Free Space</a>
+  </nav>
+  <div class="nexus-side-bottom">
+    <span class="nexus-status-dot"></span>
+    NEXUS WORKSPACE
+    <small>DREAM • DISCOVER • GROW</small>
+  </div>
+</aside>
+
+<header>
+  <a href="#" class="logo">KME <span>NEXUS</span></a>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#store">Store</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#ai">AI Tools</a>
+    <a href="#blog">Blog</a>
+    <a href="#referral">Referral</a>
+    <a href="#business">BizPilot</a>
+  <a href="#free-space">Free Space</a>
+</nav>
+</header>
+
+<main>
+  <section class="hero" id="home">
+    <div class="eyebrow">WELCOME TO YOUR DIGITAL WORLD</div>
+    <h1>KME <span>NEXUS</span></h1>
+    <p>DREAM • DISCOVER • GROW</p>
+    <p>Your all-in-one digital platform for shopping, creativity,
+       innovation, business and community rewards.</p>
+    <div class="actions">
+      <a class="btn primary" href="#store">Explore Store →</a>
+      <a class="btn" href="#referral">Join Referral →</a>
+    </div>
+  </section>
+
+  
+<!-- NEXUS_INTERACTIVE_DASHBOARD_V1 -->
+<section class="nexus-dashboard" id="command-center">
+  <div class="nexus-dashboard-top">
+    <div>
+      <h2>Command Center</h2>
+      <p>Your digital world. One workspace.</p>
+    </div>
+    <div>
+      <div class="nexus-clock" id="nexus-clock">--:--:--</div>
+      <div class="nexus-date" id="nexus-date">Loading date...</div>
+    </div>
+  </div>
+  <input class="nexus-search" id="nexus-search" type="search"
+    placeholder="Search your NEXUS sections..." aria-label="Search NEXUS sections">
+  <div class="nexus-quick-grid" id="nexus-quick-grid">
+    <a class="nexus-quick-card" href="#store"><strong>KME SELECT</strong><span>Explore the store</span></a>
+    <a class="nexus-quick-card" href="#portfolio"><strong>Portfolio</strong><span>Discover creative work</span></a>
+    <a class="nexus-quick-card" href="#ai"><strong>AI Tools</strong><span>Explore AI resources</span></a>
+    <a class="nexus-quick-card" href="#blog"><strong>NEXUS Journal</strong><span>Read and learn</span></a>
+    <a class="nexus-quick-card" href="#referral"><strong>Referral Suite</strong><span>Discover the referral space</span></a>
+    <a class="nexus-quick-card" href="#business"><strong>Business Studio</strong><span>Open KME BizPilot</span></a>
+    <a class="nexus-quick-card" href="#free-space"><strong>Free Space</strong><span>Learn and create</span></a>
+  </div>
+  <p class="nexus-no-results" id="nexus-no-results">No matching sections found.</p>
+</section>
+
+
+<!-- KME_NEXUS_MISSION_05_4 -->
+<section id="kme-focus-tracker" class="kme-focus">
+  <div class="kme-focus-head">
+    <div>
+      <p class="kme-focus-label">YOUR PERSONAL WORKSPACE</p>
+      <h2>Focus <span>Tracker</span></h2>
+      <p class="kme-focus-muted">Small steps. Big progress.</p>
+    </div>
+    <div class="kme-focus-progress">
+      <strong id="kme-focus-percent">0%</strong>
+      <small>COMPLETED</small>
+    </div>
+  </div>
+  <div class="kme-focus-input">
+    <input id="kme-focus-input" type="text"
+      maxlength="100" placeholder="Add your next task..."
+      aria-label="New task">
+    <button id="kme-focus-add" type="button">+ Add Task</button>
+  </div>
+  <div class="kme-focus-track">
+    <div id="kme-focus-bar"></div>
+  </div>
+  <ul id="kme-focus-list" aria-live="polite"></ul>
+  <div class="kme-focus-bottom">
+    <span id="kme-focus-count">0 tasks</span>
+    <button id="kme-focus-clear" type="button">Clear completed</button>
+  </div>
+  <p class="kme-focus-note">Tasks are saved only in this browser on this device.</p>
+</section>
+
+<style>
+.kme-focus {
+  max-width:1400px;margin:35px auto;padding:clamp(22px,4vw,42px);
+  border:1px solid rgba(212,175,55,.25);border-radius:20px;
+  background:linear-gradient(145deg,#15140f,#090909);
+  color:#f5f0e3;
+}
+.kme-focus * {box-sizing:border-box}
+.kme-focus-head {display:flex;justify-content:space-between;align-items:center;gap:20px}
+.kme-focus-label {font-size:.68rem;letter-spacing:.16em;color:#c6a958}
+.kme-focus h2 {font-size:clamp(1.7rem,4vw,2.5rem);margin:8px 0}
+.kme-focus h2 span {color:#d9b95c}
+.kme-focus-muted,.kme-focus-note {color:#aaa69a}
+.kme-focus-progress {text-align:right}
+.kme-focus-progress strong {display:block;font-size:2rem;color:#e3c66e}
+.kme-focus-progress small {font-size:.65rem;letter-spacing:.12em;color:#c6a958}
+.kme-focus-input {display:flex;gap:10px;margin:25px 0 16px}
+.kme-focus-input input {
+  flex:1;min-width:0;padding:13px;background:#0b0b0b;
+  color:#fff;border:1px solid #514426;border-radius:10px;font:inherit
+}
+.kme-focus button {
+  padding:12px 17px;border-radius:10px;border:1px solid #b99a4b;
+  background:#d9b95c;color:#111;font-weight:700;cursor:pointer
+}
+.kme-focus-track {height:7px;background:#29251b;border-radius:20px;overflow:hidden}
+#kme-focus-bar {height:100%;width:0;background:#d9b95c;transition:width .3s}
+#kme-focus-list {list-style:none;padding:0;margin:18px 0}
+#kme-focus-list li {
+  display:flex;align-items:center;gap:12px;padding:13px;
+  border-bottom:1px solid #302a1c;color:#eee
+}
+#kme-focus-list input {accent-color:#d9b95c;width:17px;height:17px}
+#kme-focus-list li.done span {text-decoration:line-through;color:#888}
+.kme-focus-bottom {display:flex;justify-content:space-between;align-items:center;gap:12px}
+.kme-focus-bottom span {color:#c6a958;font-size:.85rem}
+.kme-focus-bottom button {background:transparent;color:#d9b95c}
+.kme-focus-note {font-size:.72rem;margin-top:20px}
+@media(max-width:600px) {
+  .kme-focus-head {align-items:flex-start}
+  .kme-focus-input {flex-direction:column}
+  .kme-focus-input button {width:100%}
+}
+</style>
+
+<script>
+(() => {
+  const input = document.getElementById("kme-focus-input");
+  const add = document.getElementById("kme-focus-add");
+  const list = document.getElementById("kme-focus-list");
+  const bar = document.getElementById("kme-focus-bar");
+  const percent = document.getElementById("kme-focus-percent");
+  const count = document.getElementById("kme-focus-count");
+  const clear = document.getElementById("kme-focus-clear");
+  if (!input || !add || !list || !bar || !percent || !count || !clear) return;
+
+  const key = "kme_nexus_focus_tasks_v1";
+  let tasks = [];
+  try {
+    const saved = JSON.parse(localStorage.getItem(key) || "[]");
+    if (Array.isArray(saved)) {
+      tasks = saved.filter(t => t && typeof t.text === "string")
+        .map(t => ({text:t.text.slice(0,100), done:Boolean(t.done)}));
+    }
+  } catch (e) {}
+
+  function save() {
+    try { localStorage.setItem(key, JSON.stringify(tasks)); }
+    catch (e) { console.warn("Tasks could not be saved in this browser."); }
+  }
+
+  function render() {
+    list.replaceChildren();
+    tasks.forEach((task, index) => {
+      const li = document.createElement("li");
+      if (task.done) li.classList.add("done");
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = task.done;
+      checkbox.setAttribute("aria-label", "Mark task complete");
+      checkbox.addEventListener("change", () => {
+        tasks[index].done = checkbox.checked;
+        save(); render();
+      });
+      const span = document.createElement("span");
+      span.textContent = task.text;
+      li.append(checkbox, span);
+      list.append(li);
+    });
+    const completed = tasks.filter(t => t.done).length;
+    const value = tasks.length ? Math.round(completed / tasks.length * 100) : 0;
+    percent.textContent = value + "%";
+    bar.style.width = value + "%";
+    count.textContent = tasks.length + " tasks • " + completed + " completed";
+  }
+
+  function addTask() {
+    const value = input.value.trim();
+    if (!value) { input.focus(); return; }
+    tasks.push({text:value, done:false});
+    input.value = "";
+    save(); render(); input.focus();
+  }
+
+  add.addEventListener("click", addTask);
+  input.addEventListener("keydown", e => {
+    if (e.key === "Enter") addTask();
+  });
+  clear.addEventListener("click", () => {
+    tasks = tasks.filter(t => !t.done);
+    save(); render();
+  });
+  render();
+})();
+</script>
+
+<section id="store">
+    <h2 class="section-heading">KME SELECT</h2>
+    <p class="section-desc">Discover products. Make smarter choices.</p>
+    <div class="grid">
+      <article class="card">
+        <div class="symbol"></div>
+        <h3>Tech & Gadgets</h3>
+        <p>Explore useful technology and accessories.</p>
+      </article>
+      <article class="card">
+        <div class="symbol"></div>
+        <h3>Study Essentials</h3>
+        <p>Discover tools for learning and productivity.</p>
+      </article>
+      <article class="card">
+        <div class="symbol"></div>
+        <h3>Beauty & Lifestyle</h3>
+        <p>Explore everyday lifestyle products.</p>
+      </article>
+      <article class="card">
+        <div class="symbol"></div>
+        <h3>Home & Decor</h3>
+        <p>Find ideas for your personal space.</p>
+      </article>
+    </div>
+    <p class="notice">Product listings and affiliate links will be added
+      after verification and official approval.</p>
+  </section>
+
+  <section id="portfolio">
+    <h2 class="section-heading">Creative Portfolio</h2>
+    <p class="section-desc">Ideas transformed into digital creations.</p>
+    <div class="grid">
+      <article class="card">
+        <div class="symbol"></div>
+        <h3>Graphic Design</h3>
+        <p>Explore creative design projects.</p>
+      </article>
+      <article class="card">
+        <div class="symbol"></div>
+        <h3>Web Development</h3>
+        <p>Discover websites and digital experiences.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="ai">
+    <h2 class="section-heading">AI Tools</h2>
+    <p class="section-desc">Work smarter. Explore new possibilities.</p>
+    <div class="grid">
+      <article class="card">
+        <div class="symbol"></div>
+        <h3>AI Assistant</h3>
+        <p>A space for helpful AI-powered tools.</p>
+      </article>
+      <article class="card">
+        <div class="symbol"></div>
+        <h3>Idea Studio</h3>
+        <p>Explore ideas for your next project.</p>
+      </article>
+    </div>
+  </section>
+
+  
+<section id="blog">
+  <h2 class="section-heading">NEXUS Journal</h2>
+  <p class="section-desc">Ideas, knowledge and inspiration for your digital journey.</p>
+  <div class="grid">
+    <article class="card">
+      <h3>Start Your Web Development Journey</h3>
+      <p>Learn about HTML, CSS and JavaScript, and discover how to build your first website.</p>
+      <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development" target="_blank" rel="noopener">Explore learning guide →</a>
+    </article>
+    <article class="card">
+      <h3>Understanding Artificial Intelligence</h3>
+      <p>Discover how AI works, how to use it responsibly and how it can support creativity.</p>
+      <a href="https://ai.google/education/" target="_blank" rel="noopener">Explore AI learning →</a>
+    </article>
+    <article class="card">
+      <h3>Build Your Digital Portfolio</h3>
+      <p>Learn how to present your projects, skills and creative work online.</p>
+      <a href="https://docs.github.com/en/pages" target="_blank" rel="noopener">Explore GitHub Pages →</a>
+    </article>
+  </div>
+</section>
+
+
+  <section id="referral">
+    <h2 class="section-heading">Referral Suite</h2>
+    <p class="section-desc">Invite. Connect. Grow together.</p>
+    <div class="card">
+      <div class="symbol"></div>
+      <h3>Your referral journey starts here.</h3>
+      <p>Referral links, eligibility and reward tracking will be
+         introduced after the system is properly configured.</p>
+    </div>
+  </section>
+
+  
+<section id="business">
+  <h2 class="section-heading">KME Business Studio</h2>
+  <p class="section-desc">Build Your Business. Manage Your Growth.</p>
+  <div class="grid">
+    <article class="card">
+      <h3>KME BizPilot</h3>
+      <p>Your business workspace for product management, shop tools, business ideas and growth planning.</p>
+      <a href="https://edirisinghekinurimahoshadhi-debug.github.io/kme-bizpilot/" target="_blank" rel="noopener">Open KME BizPilot →</a>
+    </article>
+    <article class="card">
+      <h3>Business Idea Studio</h3>
+      <p>Explore business ideas, identify useful skills and plan your next project.</p>
+    </article>
+    <article class="card">
+      <h3>Growth Workspace</h3>
+      <p>A place to organise goals, products and future business plans.</p>
+    </article>
+  </div>
+</section>
+
+
+<section id="free-space">
+  <h2 class="section-heading">NEXUS Free Space</h2>
+  <p class="section-desc">A free space to learn, create and grow.</p>
+  <div class="grid">
+    <article class="card">
+      <h3>Learning Resources</h3>
+      <p>Explore free guides and learning materials for technology and creativity.</p>
+      <a href="https://www.freecodecamp.org/learn/" target="_blank" rel="noopener">Explore free courses →</a>
+    </article>
+    <article class="card">
+      <h3>Project Ideas</h3>
+      <p>Find inspiration for websites, design experiments and beginner-friendly projects.</p>
+    </article>
+    <article class="card">
+      <h3>Creative Corner</h3>
+      <p>Use this space to explore ideas, practise skills and showcase your creativity.</p>
+    </article>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="logo"> KME NEXUS</div>
+  DREAM • DISCOVER • GROW
+  <p>© 2026 KME NEXUS. All rights reserved.</p>
+</footer>
+
+
+<script>
+(() => {
+  const greetings = [
+    "Hello", "ආයුබෝවන්", "வணக்கம்", "Hola",
+    "Bonjour", "Hallo", "Ciao", "Olá",
+    "こんにちは", "안녕하세요", "你好",
+    "مرحبا", "Привет", "नमस्ते", "Merhaba"
+  ];
+
+  let index = 0;
+
+  function startNexusWelcome() {
+    const screen = document.getElementById("welcome-screen");
+    const greeting = document.getElementById("greeting");
+
+    if (!screen || !greeting) return;
+
+    setInterval(() => {
+      index = (index + 1) % greetings.length;
+      greeting.textContent = greetings[index];
+    }, 1300);
+
+    for (let i = 0; i < 35; i++) {
+      const particle = document.createElement("span");
+      particle.className = "nexus-particle";
+      particle.style.left = Math.random() * 100 + "%";
+      particle.style.top = Math.random() * 100 + "%";
+      particle.style.animationDelay = Math.random() * 5 + "s";
+      screen.appendChild(particle);
+    }
+  }
+
+  window.enterNexus = function() {
+    document.getElementById("welcome-screen")?.classList.add("hide");
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", startNexusWelcome);
+  } else {
+    startNexusWelcome();
+  }
+})();
+</script>
+
+
+<script id="nexus-reveal-script">
+(() => {
+  const sections = document.querySelectorAll("main section");
+
+  if (!("IntersectionObserver" in window)) {
+    sections.forEach(section => section.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  sections.forEach(section => {
+    section.classList.add("reveal-section");
+    observer.observe(section);
+  });
+})();
+</script>
+
+
+<script id="nexus-command-center-script">
+(() => {
+  const links = [...document.querySelectorAll(".nexus-side-nav a")];
+  const sections = links.map(a => document.querySelector(a.getAttribute("href")))
+                       .filter(Boolean);
+  if (!("IntersectionObserver" in window)) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(a => a.classList.toggle(
+          "active", a.getAttribute("href") === "#" + entry.target.id
+        ));
+      }
+    });
+  }, { rootMargin: "-25% 0px -60% 0px" });
+  sections.forEach(section => observer.observe(section));
+})();
+</script>
+
+
+<script id="nexus-dashboard-script">
+(() => {
+  const clock = document.getElementById("nexus-clock");
+  const date = document.getElementById("nexus-date");
+  const search = document.getElementById("nexus-search");
+  const cards = [...document.querySelectorAll(".nexus-quick-card")];
+  const noResults = document.getElementById("nexus-no-results");
+
+  function updateClock() {
+    const now = new Date();
+    if (clock) clock.textContent = now.toLocaleTimeString([], {
+      hour: "2-digit", minute: "2-digit", second: "2-digit"
+    });
+    if (date) date.textContent = now.toLocaleDateString([], {
+      weekday: "long", year: "numeric", month: "long", day: "numeric"
+    });
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  if (search) {
+    search.addEventListener("input", () => {
+      const query = search.value.trim().toLowerCase();
+      let visible = 0;
+      cards.forEach(card => {
+        const match = card.textContent.toLowerCase().includes(query);
+        card.style.display = match ? "" : "none";
+        if (match) visible++;
+      });
+      if (noResults) noResults.style.display = visible ? "none" : "block";
+    });
+  }
+})();
+</script>
+
+
+<!-- KME_NEXUS_MISSION_05_3 -->
+<style>
+#kme-scroll-progress {
+  position:fixed;top:0;left:0;width:0;height:3px;
+  background:linear-gradient(90deg,#b58b28,#ffe18a);
+  z-index:10001;box-shadow:0 0 10px #d9b95c;
+}
+#kme-back-top {
+  position:fixed;right:24px;bottom:24px;z-index:10000;
+  width:48px;height:48px;border-radius:50%;
+  border:1px solid #b99a4b;background:#111;
+  color:#e4c56c;font-size:22px;cursor:pointer;
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .25s,transform .25s,visibility .25s;
+}
+#kme-back-top.visible {
+  opacity:1;visibility:visible;transform:translateY(0);
+}
+#kme-back-top:hover {
+  background:#2a2415;box-shadow:0 0 18px #b99a4b55;
+}
+@media(max-width:600px) {
+  #kme-back-top {right:16px;bottom:16px;}
+}
+</style>
+<div id="kme-scroll-progress" aria-hidden="true"></div>
+<button id="kme-back-top" type="button"
+        aria-label="Back to top" title="Back to top">↑</button>
+<script>
+(() => {
+  const bar = document.getElementById("kme-scroll-progress");
+  const btn = document.getElementById("kme-back-top");
+  if (!bar || !btn) return;
+
+  function updateScrollUI() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = max > 0 ? (window.scrollY / max) * 100 : 0;
+    bar.style.width = progress + "%";
+    btn.classList.toggle("visible", window.scrollY > 350);
+  }
+
+  window.addEventListener("scroll", updateScrollUI, {passive:true});
+  window.addEventListener("resize", updateScrollUI);
+  btn.addEventListener("click", () => {
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+  updateScrollUI();
+})();
+</script>
+
+
+<!-- KME_NEXUS_MISSION_06_1 -->
+<style id="kme-nexus-single-view-css">
+.nexus-single-hidden { display:none !important; }
+.nexus-side-nav a.active {
+  color:#d4af37;
+  background:#d4af3712;
+}
+</style>
+
+<script id="kme-nexus-single-view-script">
+(() => {
+  const ids = [
+    "home", "command-center", "kme-focus-tracker",
+    "store", "portfolio", "ai", "blog",
+    "referral", "business", "free-space"
+  ];
+
+  const sections = ids
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  const links = [...document.querySelectorAll(".nexus-side-nav a")];
+
+  function showSection(id) {
+    if (!ids.includes(id)) id = "home";
+
+    sections.forEach(section => {
+      section.classList.toggle(
+        "nexus-single-hidden",
+        section.id !== id
+      );
+    });
+
+    links.forEach(link => {
+      link.classList.toggle(
+        "active",
+        link.getAttribute("href") === "#" + id
+      );
+    });
+
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }
+
+  document.addEventListener("click", event => {
+    const link = event.target.closest('a[href^="#"]');
+    if (!link) return;
+
+    const id = link.getAttribute("href").slice(1);
+    if (!ids.includes(id)) return;
+
+    event.preventDefault();
+
+    if (window.location.hash !== "#" + id) {
+      window.location.hash = id;
+    }
+    showSection(id);
+  });
+
+  window.addEventListener("hashchange", () => {
+    showSection(window.location.hash.slice(1));
+  });
+
+  showSection(window.location.hash.slice(1) || "home");
+})();
+</script>
+
+</body>
+</html>
+
