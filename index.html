@@ -533,6 +533,7 @@ header nav { display:none; }
     <a href="#referral"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 20c0-4 2-6 6-6s6 2 6 6m1-5c3 0 5 2 5 5"/></svg>Referral</a>
     <a href="#business"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V4h8v3M3 12h18m-11 0v2h4v-2"/></svg>BizPilot</a>
     <a href="#free-space"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM8 8h8M8 12h8M8 16h5"/></svg>Free Space</a>
+    <a href="#profile"><span>◉</span>Personal Profile</a>
   </nav>
   <div class="nexus-side-bottom">
     <span class="nexus-status-dot"></span>
@@ -1069,6 +1070,115 @@ header nav { display:none; }
 </script>
 
 
+
+<!-- KME_NEXUS_MISSION_06_2 -->
+<style>
+#kme-profile {
+  max-width:850px;
+  margin:35px auto;
+  padding:28px;
+  color:#eee;
+  background:#111;
+  border:1px solid #b99a4b55;
+  border-radius:18px;
+}
+#kme-profile h2 {color:#d4af37;margin-top:0}
+.kme-profile-avatar {
+  width:110px;height:110px;border-radius:50%;
+  display:grid;place-items:center;
+  margin:18px auto;
+  font-size:54px;
+  background:radial-gradient(circle,#4b3b1a,#17130b);
+  border:2px solid #d4af37;
+  box-shadow:0 0 25px #d4af3744;
+}
+.kme-profile-field {margin:18px 0}
+.kme-profile-field label {display:block;margin-bottom:8px;color:#d4af37}
+.kme-profile-field input,.kme-profile-field select {
+  width:100%;padding:13px;border-radius:9px;
+  border:1px solid #806a35;background:#090909;color:white;
+}
+#kme-profile-save {
+  padding:12px 24px;border:1px solid #d4af37;
+  border-radius:9px;background:#d4af37;color:#111;
+  font-weight:bold;cursor:pointer;
+}
+#kme-profile-message {color:#d4af37;margin-top:14px}
+</style>
+
+<section id="profile">
+  <div id="kme-profile">
+    <h2>PERSONAL PROFILE</h2>
+    <p>Your identity. Your workspace. Your NEXUS.</p>
+
+    <div class="kme-profile-avatar" id="kme-avatar-preview">👩🏻‍💻</div>
+
+    <div class="kme-profile-field">
+      <label for="kme-profile-name">Display Name</label>
+      <input id="kme-profile-name" maxlength="40"
+             placeholder="Enter your display name">
+    </div>
+
+    <div class="kme-profile-field">
+      <label for="kme-avatar-choice">Avatar Preference</label>
+      <select id="kme-avatar-choice">
+        <option value="👩🏻‍💻">Anime Creator</option>
+        <option value="👩🏻‍🚀">Cosmic Explorer</option>
+        <option value="🧑🏻‍💻">Cyber Creator</option>
+        <option value="👑">Golden Crown</option>
+      </select>
+    </div>
+
+    <button id="kme-profile-save" type="button">SAVE PROFILE</button>
+    <p id="kme-profile-message" role="status"></p>
+  </div>
+</section>
+
+<script id="kme-profile-script">
+(() => {
+  const name = document.getElementById("kme-profile-name");
+  const choice = document.getElementById("kme-avatar-choice");
+  const preview = document.getElementById("kme-avatar-preview");
+  const save = document.getElementById("kme-profile-save");
+  const message = document.getElementById("kme-profile-message");
+
+  if (!name || !choice || !preview || !save || !message) return;
+
+  function updateAvatar() {
+    preview.textContent = choice.value;
+  }
+
+  choice.addEventListener("change", updateAvatar);
+
+  try {
+    const saved = JSON.parse(localStorage.getItem("kmeNexusProfile") || "{}");
+    if (typeof saved.name === "string") name.value = saved.name;
+    if ([...choice.options].some(option => option.value === saved.avatar)) {
+      choice.value = saved.avatar;
+    }
+  } catch (error) {
+    console.warn("Could not load saved profile.", error);
+  }
+
+  updateAvatar();
+
+  save.addEventListener("click", () => {
+    const profile = {
+      name: name.value.trim(),
+      avatar: choice.value
+    };
+
+    try {
+      localStorage.setItem("kmeNexusProfile", JSON.stringify(profile));
+      message.textContent = "Profile saved successfully!";
+    } catch (error) {
+      message.textContent = "Could not save profile in this browser.";
+    }
+  });
+})();
+</script>
+<!-- END KME_NEXUS_MISSION_06_2 -->
+
 <!-- KME_NEXUS_MISSION_06_1 -->
 <style id="kme-nexus-single-view-css">
 .nexus-single-hidden { display:none !important; }
@@ -1083,7 +1193,7 @@ header nav { display:none; }
   const ids = [
     "home", "command-center", "kme-focus-tracker",
     "store", "portfolio", "ai", "blog",
-    "referral", "business", "free-space"
+    "referral", "business", "free-space", "profile"
   ];
 
   const sections = ids
